@@ -19,11 +19,20 @@ print_r($arrs);
 <?php
 
 $file = fopen("timezones.csv","r");
-
+try {
+        $conn = mysqli_connect("localhost", 'root', '', "ghurbo");
+        //echo "Connected successfully"; 
+    } catch (exception $e) {
+        echo "Connection failed: " . $e->getMessage();
+    }
 while(! feof($file))
   {
   echo "<pre>";
   $row = fgetcsv($file);
+
+    $sql = "INSERT into timezones 
+                   values ('".$row[0]."','" . $row[1] . "','" . $row[2]. "')";
+                $result = mysqli_query($conn, $sql);
   echo $row[0]. ' '. $row[1]; 
   	
   }
